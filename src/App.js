@@ -8,6 +8,7 @@ function App() {
   const getMemories = async () => {
     const resp = await fetch('/api/memories');
     const data = await resp.json();
+    console.log(data);
     setMemories(data);
   }
 
@@ -28,13 +29,13 @@ function App() {
   const handleThoughtChange = e => setThought({ ...thought, [e.target.name]: e.target.value });
 
   return (
-    <div id="memories">{renderMemories}</div>
-    // <div className="App">
-    //   <h1>Memories</h1>
-    //   <input type="date" name="date" value={thought.date} onChange={handleThoughtChange} />
-    //   <input type="text" name="text" placeholder="Your thought" value={thought.text} onChange={handleThoughtChange} />
-    //   <button onClick={saveThought}>Commit to memory</button>
-    // </div>
+    <div className="App">
+      <h1>Memories</h1>
+      <input type="date" name="date" value={thought.date} onChange={handleThoughtChange} />
+      <input type="text" name="text" placeholder="Your thought" value={thought.text} onChange={handleThoughtChange} />
+      <button onClick={saveThought}>Commit to memory</button>
+      <div id="memories">{renderMemories}</div>
+    </div>
   );
 }
 
