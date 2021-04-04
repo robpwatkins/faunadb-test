@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+import { useState } from 'react';
 import './App.css';
 
 function App() {
+  const [thought, setThought] = useState({ date: new Date().toISOString().split('T')[0], text: ''});
+
+  const saveThought = async () => {
+    const resp = await fetch('/api/post-memory', { method: 'POST' });
+    const data = await resp.json();
+    console.log(data);
+  }
+  const handleThoughtChange = e => setThought({ ...thought, [e.target.name]: e.target.value });
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Memories</h1>
+      <input type="date" name="date" value={thought.date} onChange={handleThoughtChange} />
+      <input type="text" name="text" placeholder="Your thought" value={thought.text} onChange={handleThoughtChange} />
+      <button onClick={saveThought}>Commit to memory</button>
     </div>
   );
 }
