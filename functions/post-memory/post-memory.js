@@ -6,19 +6,17 @@ const q = faunadb.query;
 
 const handler = async (event) => {
   try {
-    const memory = { data: JSON.parse(event.body) }
+    const memory = { 
+      data: JSON.parse(event.body) 
+    }
     const req = await faunaClient.query(q.Create(q.Ref("classes/memories"), memory))
     console.log(req);
-    const subject = event.queryStringParameters.name || 'World'
     return {
       statusCode: 200,
-      body: JSON.stringify({ message: `Hello ${subject}` }),
-      // // more keys you can return:
-      // headers: { "headerName": "headerValue", ... },
-      // isBase64Encoded: true,
+      body: JSON.stringify({ message: `Successfully added memory!` }),
     }
   } catch (error) {
-    return { statusCode: 500, body: error.toString() }
+    return { statusCode: 500, body: error.message }
   }
 }
 
